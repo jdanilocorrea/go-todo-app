@@ -1,0 +1,25 @@
+
+var (
+	tasks   = make(map[int]*entity.Task) // Mapa armazenando tarefas com seu ID como chave.
+	nextID  = 1                          // Variável para gerar um ID único para cada nova tarefa.
+	tasksMu sync.Mutex                   // Mutex para controlar o acesso ao mapa de tarefas.
+)
+
+tasksMu.Lock() // Garante exclusividade ao modificar o mapa de tarefas.
+	defer tasksMu.Unlock()
+
+	// Verifica se o ID já está em uso (não é necessário se nextID é sempre incrementado corretamente)
+	
+
+
+
+	task.ID = nextID            // Atribui um ID único à nova tarefa.
+	nextID++                    // Incrementa o ID para uso na próxima tarefa.
+
+
+if _, exists := tasks[nextID]; exists {
+		return errors.New("conflito de ID, já existe uma tarefa com o próximo ID")
+	}
+
+tasks[task.ID] = task       // Adiciona a tarefa ao mapa.
+

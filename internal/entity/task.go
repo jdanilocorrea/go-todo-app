@@ -15,9 +15,6 @@ type Task struct {
 	UpdatedAt   time.Time `json:"updated_at"`
 }
 
-// NewTask cria uma nova instância de Task com os valores fornecidos para nome, descrição e prioridade.
-// A função também inicializa os campos CreatedAt e UpdatedAt com a hora atual.
-// Retorna um erro se o nome ou descrição estiverem vazios, ou se a prioridade não estiver em um intervalo aceitável.
 func NewTask(name, description string, priority int) (*Task, error) {
 	if name == "" {
 		return nil, errors.New("o nome da tarefa não pode estar vazio")
