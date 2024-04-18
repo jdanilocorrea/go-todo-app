@@ -2,9 +2,9 @@ POST http://localhost:8080/tasks HTTP/1.1
 Content-Type: application/json
 
 {
-    "name": "Task 1",
-    "description": "Task 1 description",
-    "priority": 1
+    "name": "Task 3",
+    "description": "Task 3 description",
+    "priority": 3
 }
 
 ###
