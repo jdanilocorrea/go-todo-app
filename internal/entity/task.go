@@ -16,6 +16,7 @@ type Task struct {
 }
 
 func NewTask(name, description string, priority int) (*Task, error) {
+
 	if name == "" {
 		return nil, errors.New("o nome da tarefa não pode estar vazio")
 	}

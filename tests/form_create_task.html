@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Manager</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        form {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #5c67f2;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            text-transform: uppercase;
+            font-weight: bold;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        button:hover {
+            background-color: #4a54e1;
+        }
+
+        .response-info {
+            text-align: center;
+            padding: 8px;
+            margin-top: 10px;
+            border-radius: 4px;
+            width: 300px;
+            color: #333;
+            background-color: #e0e0e0;
+            border: 1px solid #bebebe;
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Task Manager</h1>
+    <form id="taskForm">
+        <label for="name">Task Name:</label>
+        <input type="text" id="name" name="name" required><br>
+
+        <label for="description">Description:</label>
+        <textarea id="description" name="description" required></textarea><br>
+
+        <label for="priority">Priority:</label>
+        <input type="number" id="priority" name="priority" required min="1" max="5"><br>
+
+        <button type="submit">Submit Task</button>
+    </form>
+
+    <div id="responseMessage" class="response-info"></div> <!-- Mensagem de feedback será mostrada aqui -->
+    <div id="statusCode" class="response-info"></div> <!-- Status Code será mostrado aqui -->
+    <div id="responseDate" class="response-info"></div> <!-- Date será mostrado aqui -->
+
+    <script>
+        document.getElementById('taskForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+            const responseMessage = document.getElementById('responseMessage');
+            const statusCode = document.getElementById('statusCode');
+            const responseDate = document.getElementById('responseDate');
+
+            const formData = {
+                name: document.getElementById('name').value,
+                description: document.getElementById('description').value,
+                priority: document.getElementById('priority').value
+            };
+
+            fetch('http://localhost:8080/tasks', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            })
+                .then(response => {
+                    statusCode.textContent = 'HTTP Status Code: ' + response.status;
+                    response.headers.forEach((value, key) => {
+                        if (key.toLowerCase() === 'date') {
+                            responseDate.textContent = 'Date: ' + value;
+                        }
+                    });
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    responseMessage.textContent = 'Task submitted successfully!';
+                    responseMessage.style.backgroundColor = '#ccffcc';
+                })
+                .catch(error => {
+                    responseMessage.textContent = 'Error: ' + error.message;
+                    responseMessage.style.backgroundColor = '#ffcccc';
+                });
+        });
+    </script>
+</body>
+
+</html>

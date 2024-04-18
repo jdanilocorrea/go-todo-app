@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"encoding/json"
+	"log"
 	"net/http"
 
 	"github.com/jdanilocorrea/go-todo-app/internal/entity"
@@ -24,6 +25,7 @@ func (h *TaskHandler) CreateTask(w http.ResponseWriter, r *http.Request) {
 	var task_input dto.CreateTaskInput
 	err := json.NewDecoder(r.Body).Decode(&task_input)
 	if err != nil {
+		log.Println(err)
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}

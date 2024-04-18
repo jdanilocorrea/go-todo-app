@@ -20,7 +20,7 @@ func Db(t *testing.T) *gorm.DB {
 
 func TestCreateTask(t *testing.T) {
 	// Criar uma nova tarefa usando o construtor NewTask
-	task, err := entity.NewTask("Comprar", "ir ao mercado", 1)
+	task, err := entity.NewTask("Estudar", "Programação golang", 1)
 	assert.NotNil(t, task, "a tarefa criada não deveria ser nula")
 	assert.Nil(t, err, "erro ao criar a tarefa não deveria ocorrer")
 	db := Db(t)
@@ -29,8 +29,8 @@ func TestCreateTask(t *testing.T) {
 	// Adicionar a tarefa ao mapa de tarefas
 	assert.Nil(t, err, "erro ao adicionar a tarefa não deveria ocorrer")
 	// Verificações básicas sobre a tarefa retornada
-	assert.Equal(t, "Comprar", task.Name, "o nome da tarefa deve ser o esperado")
-	assert.Equal(t, "ir ao mercado", task.Description, "a descrição da tarefa deve ser a esperada")
+	assert.Equal(t, "Estudar", task.Name, "o nome da tarefa deve ser o esperado")
+	assert.Equal(t, "Programação golang", task.Description, "a descrição da tarefa deve ser a esperada")
 	assert.NotEmpty(t, task.ID, "o ID da tarefa não deve estar vazio")
 
 }
