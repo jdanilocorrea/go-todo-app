@@ -6,4 +6,5 @@ import (
 
 type TaskInterface interface {
 	CreateTask(task *entity.Task) error
+	FindAll(page, limit int, sort string) ([]entity.Task, error)
 }

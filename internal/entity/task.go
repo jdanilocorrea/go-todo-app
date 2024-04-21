@@ -3,11 +3,13 @@ package entity
 import (
 	"errors"
 	"time"
+
+	"github.com/jdanilocorrea/go-todo-app/pkg/entity"
 )
 
 // Task representa uma tarefa com identificação, nome, descrição, prioridade e timestamps.
 type Task struct {
-	ID          int       `json:"id"`
+	ID          entity.ID `json:"id"`
 	Name        string    `json:"name"`
 	Description string    `json:"description"`
 	Priority    int       `json:"priority"`
@@ -29,6 +31,7 @@ func NewTask(name, description string, priority int) (*Task, error) {
 
 	currentTime := time.Now()
 	return &Task{
+		ID:          entity.NewID(),
 		Name:        name,
 		Description: description,
 		Priority:    priority,
